@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "372130563722",
+    "project_id": "prototipovr",
+    "storage_bucket": "prototipovr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:372130563722:android:2f58c0985600352e6b4f73",
+        "android_client_info": {
+          "package_name": "com.aCompany.EjerciciosVR"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQUGOxvrWyxzq3MrjWnynrA1Sgr5U9sCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
