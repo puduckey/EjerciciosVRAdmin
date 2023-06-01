@@ -9,7 +9,7 @@ using Firebase.Extensions;
 public class AppData : MonoBehaviour
 {
     FirebaseApp firebaseApp;
-    FirebaseFirestore db;
+    public FirebaseFirestore db;
 
     public static AppData instance;
 

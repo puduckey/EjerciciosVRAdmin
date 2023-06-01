@@ -1197,13 +1197,14 @@ GameObject:
   - component: {fileID: 54292892}
   - component: {fileID: 54292894}
   - component: {fileID: 54292893}
+  - component: {fileID: 54292895}
   m_Layer: 5
   m_Name: IniciarSesionUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &54292892
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1265,6 +1266,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 54292891}
   m_CullTransparentMesh: 1
+--- !u!114 &54292895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54292891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26524ce7bb8d3d640be850cd62d4a416, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &60071629
 GameObject:
   m_ObjectHideFlags: 0
@@ -3867,7 +3880,7 @@ MonoBehaviour:
   usuarioSalud:
     credenciales:
       username: holahola
-      rol: 0
+      rol: 
   configEjercicios:
   - id: poipu
     ejercicio: {fileID: 11400000, guid: b013013e09dad9d44aa58701591a9c9d, type: 2}
@@ -10221,10 +10234,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b2e2d59a515a9499f97c9d9458ba3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seleccionarEjercicio: {fileID: 1700869676}
-  aniadirEjercicio: {fileID: 812707839}
-  crearRutina: {fileID: 1545936993}
-  gestionRutinas: {fileID: 1867766149}
+  menuSeleccionarEjercicio: {fileID: 0}
+  menuAniadirEjercicio: {fileID: 0}
+  menuCrearRutina: {fileID: 0}
+  menuGestionRutinas: {fileID: 0}
+  menu_iniciarSesion: {fileID: 0}
+  menuPrincipal: {fileID: 0}
 --- !u!4 &783506452
 Transform:
   m_ObjectHideFlags: 0
@@ -10392,7 +10407,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &789666331
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11166,8 +11181,9 @@ GameObject:
   - component: {fileID: 809489602}
   - component: {fileID: 809489604}
   - component: {fileID: 809489603}
+  - component: {fileID: 809489605}
   m_Layer: 5
-  m_Name: MenuTrabajoUI
+  m_Name: MenuPrincipalUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11234,6 +11250,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 809489601}
   m_CullTransparentMesh: 1
+--- !u!114 &809489605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809489601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df125c41133cbc24881d429599785e62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &812707835
 GameObject:
   m_ObjectHideFlags: 0

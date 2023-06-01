@@ -103,7 +103,7 @@ public class Menu_CrearRutina : MonoBehaviour
         if (respuesta)
         {
             gameObject.SetActive(false);
-            Interfaces.instance.gestionRutinas.ActivarUI();
+            Interfaces.instance.menuGestionRutinas.ActivarUI();
         }
         else
         {

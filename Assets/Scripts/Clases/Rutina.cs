@@ -25,12 +25,12 @@ public class Rutina
 
     public void CrearRutina()
     {
-        Interfaces.instance.crearRutina.ActivarUICrear(this);
+        Interfaces.instance.menuCrearRutina.ActivarUICrear(this);
     }
 
     public void ActualizarRutina()
     {
-        Interfaces.instance.crearRutina.ActivarUIActualizar(this);
+        Interfaces.instance.menuCrearRutina.ActivarUIActualizar(this);
     }
 
     public ConfigEjercicio AgregarEjercicio()

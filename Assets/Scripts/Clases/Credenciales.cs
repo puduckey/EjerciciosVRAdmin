@@ -7,23 +7,31 @@ public class Credenciales
 {
     public string username;
     private string password;
-    public int rol; // rol: 0 = usuarioSalud | 1 = paciente
+    public string rol;
 
-    public Credenciales(string username, string password, int rol)
+    public Credenciales(string username, string password, string rol)
     {
         this.username = username;
         this.password = password;
         this.rol = rol;
     }
 
-    public void IniciarSesion()
+    public bool IniciarSesion(string username, string password)
     {
+        if (!ValidarDatos(username, password))
+            return false;
 
+        if (rol == "usuarioSalud")
+            Interfaces.instance.menuPrincipal.ActivarUI();
+
+        return true;
     }
 
-    public void ValidarDatos()
+    public bool ValidarDatos(string username, string password)
     {
-
+        if (username == this.username && password == this.password)
+            return true;
+        return false;
     }
 
     public void CrearCredenciales()
