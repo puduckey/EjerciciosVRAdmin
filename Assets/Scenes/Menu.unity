@@ -1204,7 +1204,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &54292892
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1278,6 +1278,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26524ce7bb8d3d640be850cd62d4a416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  input_username: {fileID: 1045501016}
+  input_password: {fileID: 521922119}
+  txt_mensaje: {fileID: 74661386}
 --- !u!1 &60071629
 GameObject:
   m_ObjectHideFlags: 0
@@ -1887,7 +1890,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 120701050}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 54292895}
+        m_TargetAssemblyTypeName: Menu_IniciarSesion, Assembly-CSharp
+        m_MethodName: IniciarSesionClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &120701050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7934,7 +7949,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 554886114}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 809489605}
+        m_TargetAssemblyTypeName: Menu_MenuPrincipal, Assembly-CSharp
+        m_MethodName: InterfazGestionPacientes
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &554886114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10234,12 +10261,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b2e2d59a515a9499f97c9d9458ba3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuSeleccionarEjercicio: {fileID: 0}
-  menuAniadirEjercicio: {fileID: 0}
-  menuCrearRutina: {fileID: 0}
-  menuGestionRutinas: {fileID: 0}
-  menu_iniciarSesion: {fileID: 0}
-  menuPrincipal: {fileID: 0}
+  menuSeleccionarEjercicio: {fileID: 1700869676}
+  menuAniadirEjercicio: {fileID: 812707839}
+  menuCrearRutina: {fileID: 1545936993}
+  menuGestionRutinas: {fileID: 1867766149}
+  menu_iniciarSesion: {fileID: 54292895}
+  menuPrincipal: {fileID: 809489605}
 --- !u!4 &783506452
 Transform:
   m_ObjectHideFlags: 0
@@ -11188,7 +11215,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &809489602
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16559,8 +16586,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36.37
-  m_fontSizeBase: 36.37
+  m_fontSize: 43.03
+  m_fontSizeBase: 43.03
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -17363,8 +17390,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36.37
-  m_fontSizeBase: 36.37
+  m_fontSize: 43.03
+  m_fontSizeBase: 43.03
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -19179,7 +19206,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1467045930}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 809489605}
+        m_TargetAssemblyTypeName: Menu_MenuPrincipal, Assembly-CSharp
+        m_MethodName: InterfazInicioSesion
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1467045930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25120,7 +25159,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1890551837}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 809489605}
+        m_TargetAssemblyTypeName: Menu_MenuPrincipal, Assembly-CSharp
+        m_MethodName: InterfazGestionRutinas
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1890551837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27131,8 +27182,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36.37
-  m_fontSizeBase: 36.37
+  m_fontSize: 43.03
+  m_fontSizeBase: 43.03
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

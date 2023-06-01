@@ -14,7 +14,7 @@ public class UsuarioSalud
 
     public void DesplegarInterfaz()
     {
-
+        Interfaces.instance.menuPrincipal.ActivarUI();
     }
 
     public void ConfirmarRutina()

@@ -10,13 +10,9 @@ public class Menu_IniciarSesion : MonoBehaviour
 {
     FirebaseFirestore db;
 
-    TMP_InputField input_username, input_password;
-    TMP_Text txt_mensaje;
+    [SerializeField] TMP_InputField input_username, input_password;
+    [SerializeField] TMP_Text txt_mensaje;
 
-    void Start()
-    {
-        db = AppData.instance.db;
-    }
 
     public void ActivarUI()
     {
@@ -26,8 +22,10 @@ public class Menu_IniciarSesion : MonoBehaviour
         txt_mensaje.text = "";
     }
 
-    public void IniciarSesionClick()
+    public async void IniciarSesionClick()
     {
+        db = AppData.instance.db;
+
         string username = input_username.text;
         string password = input_password.text;
 
@@ -39,32 +37,50 @@ public class Menu_IniciarSesion : MonoBehaviour
 
         DocumentReference docRef = db.Collection("credenciales").Document(username);
 
-        docRef.GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+
+        if (snapshot.Exists)
         {
+            Dictionary<string, object> credencialData = snapshot.ToDictionary();
 
-            DocumentSnapshot snapshot = task.Result;
+            Credenciales credenciales = new Credenciales
+            (
+                credencialData["username"].ToString(),
+                credencialData["password"].ToString(),
+                credencialData["rol"].ToString()
+            );
 
-            if (snapshot.Exists)
+            bool resultado = credenciales.IniciarSesion(username, password);
+
+            if (!resultado)
+                txt_mensaje.text = "Error: datos incorrectos";
+            else
             {
-                Dictionary<string, object> credencialData = snapshot.ToDictionary();
+                if (credenciales.rol == "usuarioSalud")
+                {
+                    UsuarioSalud usuarioSalud = new UsuarioSalud(credenciales);
+                    AppData.instance.usuarioSalud = usuarioSalud;
 
-                Credenciales credenciales = new Credenciales
-                (
-                    credencialData["username"].ToString(),
-                    credencialData["password"].ToString(),
-                    credencialData["rol"].ToString()
-                );
+                    Interfaces.instance.menuPrincipal.ActivarUI();
 
-                bool resultado = credenciales.IniciarSesion(username, password);
+                    Debug.Log("Usuario Salud identificado");
+                }
+                else if (credenciales.rol == "paciente")
+                {
+                    // Obtener la data del paciente
+                    //
+                    // Paciente paciente = new Paciente(...)
+                    //
+                    // 
+                    Debug.Log("Usuario Paciente identificado");
+                }
 
-                if (!resultado)
-                    txt_mensaje.text = "Error: datos incorrectos";
-                else
-                    this.gameObject.SetActive(false);
+                this.gameObject.SetActive(false);
             }
-            else {
-                txt_mensaje.text = "Error: usuario no encontrado";
-            }
-        });
+        }
+        else
+        {
+            txt_mensaje.text = "Error: usuario no encontrado";
+        }
     }
 }

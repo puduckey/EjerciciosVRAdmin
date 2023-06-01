@@ -20,10 +20,6 @@ public class Credenciales
     {
         if (!ValidarDatos(username, password))
             return false;
-
-        if (rol == "usuarioSalud")
-            Interfaces.instance.menuPrincipal.ActivarUI();
-
         return true;
     }
 
