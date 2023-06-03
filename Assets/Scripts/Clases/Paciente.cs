@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Text.RegularExpressions;
 
+[System.Serializable]
 public class Paciente
 {
     public string id;

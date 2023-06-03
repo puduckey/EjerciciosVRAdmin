@@ -4220,6 +4220,18 @@ MonoBehaviour:
     credenciales:
       username: holahola
       rol: 
+  paciente:
+    id: daf90a20-5bc4-4c6d-ab98-451f597e3f18
+    credenciales:
+      username: 
+      rol: 
+    rut: 0
+    rut_dv: 
+    nombre: 
+    apellido: 
+    patologia: 
+    usuarioAsociado: 
+  pacientesUsuario: []
   configEjercicios:
   - id: poipu
     ejercicio: {fileID: 11400000, guid: b013013e09dad9d44aa58701591a9c9d, type: 2}
@@ -5829,7 +5841,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1815601139}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6500,6 +6512,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74e19ce76dacb1d42b01640cb8084bdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  paciente:
+    id: 5a1658cf-a736-44c9-b901-d702deeeb652
+    credenciales:
+      username: 
+      rol: 
+    rut: 0
+    rut_dv: 
+    nombre: 
+    apellido: 
+    patologia: 
+    usuarioAsociado: 
   text_indentificacion: {fileID: 0}
   text_patologia: {fileID: 0}
 --- !u!114 &416349457
@@ -9556,7 +9579,7 @@ RectTransform:
   m_Children:
   - {fileID: 354392678}
   m_Father: {fileID: 1815601139}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10364,12 +10387,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1934997317}
-  m_Father: {fileID: 1260878025}
-  m_RootOrder: 1
+  m_Father: {fileID: 1815601139}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 671.05023, y: -26.988266}
+  m_AnchoredPosition: {x: 782.0503, y: -442.92798}
   m_SizeDelta: {x: 325.4305, y: 53.9765}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &741058531
@@ -16203,7 +16226,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Registro nuevo paciente
+  m_text: Registro paciente
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -18436,7 +18459,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1811894499}
-  - {fileID: 741058530}
   - {fileID: 1477422264}
   - {fileID: 1791679812}
   m_Father: {fileID: 1185069453}
@@ -20850,7 +20872,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1260878025}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -24933,7 +24955,7 @@ RectTransform:
   m_Children:
   - {fileID: 818977675}
   m_Father: {fileID: 1260878025}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -25479,6 +25501,7 @@ RectTransform:
   - {fileID: 1066041175}
   - {fileID: 183496186}
   - {fileID: 1800200095}
+  - {fileID: 741058530}
   - {fileID: 1991369117}
   - {fileID: 374211103}
   - {fileID: 2137748261}
@@ -28437,7 +28460,7 @@ RectTransform:
   m_Children:
   - {fileID: 1214956792}
   m_Father: {fileID: 1815601139}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -29958,7 +29981,7 @@ RectTransform:
   m_Children:
   - {fileID: 2145919424}
   m_Father: {fileID: 1815601139}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

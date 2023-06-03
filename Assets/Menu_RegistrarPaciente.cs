@@ -19,22 +19,36 @@ public class Menu_RegistrarPaciente : MonoBehaviour
     [SerializeField] TMP_Text text_mensaje;
 
 
-    public void ActivarUI()
+    public void ActivarUI(Paciente paciente = null)
     {
         gameObject.SetActive(true);
 
-        input_nombre.text = "";
-        input_apellido.text = "";
-        input_rut.text = "";
-        input_rutDv.text = "";
-        input_patologia.text = "";
-        input_username.text = "";
-        input_password.text = "";
-        input_confirmPassword.text = "";
         text_mensaje.text = "";
+
+        if (paciente == null)
+        {
+            input_nombre.text = "";
+            input_apellido.text = "";
+            input_rut.text = "";
+            input_rutDv.text = "";
+            input_patologia.text = "";
+            input_username.text = "";
+            input_password.text = "";
+            input_confirmPassword.text = "";
+            return;
+        }
+
+        input_nombre.text = paciente.nombre;
+        input_apellido.text = paciente.apellido;
+        input_rut.text = paciente.rut.ToString();
+        input_rutDv.text = paciente.rut_dv;
+        input_patologia.text = paciente.patologia;
+        input_username.text = paciente.credenciales.username;
+        input_password.text = paciente.credenciales.GetPassword();
+        input_confirmPassword.text = paciente.credenciales.GetPassword();
     }
 
-    public void RegistrarPaciente()
+    public async void RegistrarPaciente()
     {
         // validar que los campos no esten vacios;
         if (string.IsNullOrEmpty(input_nombre.text) || string.IsNullOrEmpty(input_apellido.text) ||
@@ -47,7 +61,7 @@ public class Menu_RegistrarPaciente : MonoBehaviour
         }
 
         Credenciales newCredenciales = new Credenciales();
-        bool respuesta = newCredenciales.CrearCredenciales(input_username.text, input_password.text, input_confirmPassword.text, "paciente");
+        bool respuesta = await newCredenciales.CrearCredenciales(input_username.text, input_password.text, input_confirmPassword.text, "paciente");
 
         if (!respuesta)
         {
@@ -65,6 +79,7 @@ public class Menu_RegistrarPaciente : MonoBehaviour
             return;
         }
         AppData.instance.RegistrarNuevoPaciente(newPaciente);
+        Salir();
     }
 
     public void Salir()

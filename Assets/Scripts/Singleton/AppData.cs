@@ -5,6 +5,7 @@ using System;
 using Firebase;
 using Firebase.Firestore;
 using Firebase.Extensions;
+using System.Threading.Tasks;
 
 public class AppData : MonoBehaviour
 {
@@ -87,10 +88,14 @@ public class AppData : MonoBehaviour
         {
             Dictionary<string, object> pacienteData = documentSnapshot.ToDictionary();
 
+            Credenciales credencial = await ObtenerCredencial(pacienteData["credencialUsername"].ToString());
+
+            Debug.Log(credencial);
+
             Paciente obj = new Paciente
             (
                 pacienteData["id"].ToString(),
-                null,
+                credencial,
                 Convert.ToInt32(pacienteData["rut"]),
                 pacienteData["rut_dv"].ToString(),
                 pacienteData["nombre"].ToString(),
@@ -310,7 +315,7 @@ public class AppData : MonoBehaviour
             { "nombre", paciente.nombre },
             { "apellido", paciente.apellido },
             { "rut", paciente.rut },
-            { "rut_dv", paciente.apellido },
+            { "rut_dv", paciente.rut_dv },
             { "patologia", paciente.patologia },
             { "usuarioAsociado", usuarioSalud.credenciales.username },
             { "credencialUsername", paciente.credenciales.username }
@@ -327,26 +332,45 @@ public class AppData : MonoBehaviour
         {
             { "username", paciente.credenciales.username },
             { "password", paciente.credenciales.GetPassword() },
-            { "rol", paciente.apellido }
+            { "rol", paciente.credenciales.rol }
         };
 
         DocumentReference credencialDoc = db.Collection("credenciales").Document(paciente.credenciales.username);
         credencialDoc.SetAsync(credencialData).ContinueWithOnMainThread(task =>
         {
-            Debug.Log("Paciente guardado en DB");
+            Debug.Log("Credencial guardado en DB");
             return true;
         });
         return false;
     }
 
+
     // Metodo que comprueba si el username esta disponible
-    public bool ValidarUsername(string username)
+    public async Task<bool> ValidarUsername(string username)
     {
         DocumentReference docRef = db.Collection("credencial").Document(username);
+        DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
 
-        if (docRef != null)
-            return false;
-        return true;
+        return !snapshot.Exists;
+    }
+
+    public async Task<Credenciales> ObtenerCredencial(string username)
+    {
+        DocumentReference docRef = db.Collection("credenciales").Document(username);
+        DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+
+        if (snapshot.Exists)
+        {
+            Credenciales credencialEncontrada = new Credenciales(
+                snapshot.GetValue<string>("username"),
+                snapshot.GetValue<string>("password"),
+                snapshot.GetValue<string>("rol")
+                );
+
+            return credencialEncontrada;
+        }
+
+        return null; // Retornar null si no se encuentra el documento
     }
 
     void OnDisable()

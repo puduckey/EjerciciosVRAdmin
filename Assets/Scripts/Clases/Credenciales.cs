@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 [System.Serializable]
 public class Credenciales
@@ -34,17 +35,21 @@ public class Credenciales
         return false;
     }
 
-    public bool CrearCredenciales(string username, string password, string confirmarPassword, string rol)
+    public async Task<bool> CrearCredenciales(string username, string password, string confirmarPassword, string rol)
     {
         // validadores
-        if (password != confirmarPassword)
+        if (password != confirmarPassword) {
+            Debug.Log("error en la password");
             return false;
+        }
 
         // comprobar que el username no exista en la bd
-        bool respuesta = AppData.instance.ValidarUsername(username);
+        bool respuesta = await AppData.instance.ValidarUsername(username);
 
-        if (!respuesta)
+        if (!respuesta) {
+            Debug.Log("error en el username");
             return false;
+        }
 
         this.username = username;
         this.password = password;
