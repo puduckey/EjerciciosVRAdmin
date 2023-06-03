@@ -80,8 +80,26 @@ public class AppData : MonoBehaviour
         // AsignarUsuario
         usuarioSalud = usuario;
 
-        // FALTA: captura de pacientes asociados
+        // Captura de pacientes asociados
+        QuerySnapshot querypaciente = await db.Collection("paciente").WhereEqualTo("usuarioAsociado", usuario.credenciales.username).GetSnapshotAsync();
 
+        foreach (DocumentSnapshot documentSnapshot in querypaciente.Documents)
+        {
+            Dictionary<string, object> pacienteData = documentSnapshot.ToDictionary();
+
+            Paciente obj = new Paciente
+            (
+                pacienteData["id"].ToString(),
+                null,
+                Convert.ToInt32(pacienteData["rut"]),
+                pacienteData["rut_dv"].ToString(),
+                pacienteData["nombre"].ToString(),
+                pacienteData["apellido"].ToString(),
+                pacienteData["patologia"].ToString(),
+                pacienteData["usuarioAsociado"].ToString()
+            );
+            pacientesUsuario.Add(obj);
+        }
 
         // Captura datos de rutinas asociadas 
         QuerySnapshot queryrutina = await db.Collection("rutina").WhereEqualTo("usuarioAsociado", usuario.credenciales.username).GetSnapshotAsync();
@@ -111,7 +129,7 @@ public class AppData : MonoBehaviour
             ConfigEjercicio obj = new ConfigEjercicio
             (
                 configEjercicioData["id"].ToString(),
-                FindEjercicioByID(Convert.ToInt32(configEjercicioData["ejercicioID"])),
+                BuscarEjercicio(Convert.ToInt32(configEjercicioData["ejercicioID"])),
                 Convert.ToInt32(configEjercicioData["repeticiones"]),
                 Convert.ToInt32(configEjercicioData["duracion"]),
                 Convert.ToInt32(configEjercicioData["series"]),
@@ -126,7 +144,7 @@ public class AppData : MonoBehaviour
         }
     }
 
-    public Ejercicio FindEjercicioByID(int id)
+    public Ejercicio BuscarEjercicio(int id)
     {
         foreach(Ejercicio ejercicio in ejercicios)
         {
@@ -251,7 +269,7 @@ public class AppData : MonoBehaviour
         }
     }
 
-    public List<ConfigEjercicio> GetConfigEjercicioListByRutinaID(string rutinaID)
+    public List<ConfigEjercicio> BuscarConfigEjercicioList(string rutinaID)
     {
         // Función para obtener las configEjercicio filtrados por ID de rutina
         List<ConfigEjercicio> list = configEjercicios.FindAll(obj => obj.rutinaAsociadaID == rutinaID);
@@ -280,6 +298,55 @@ public class AppData : MonoBehaviour
                 Debug.Log("ConfigEjercicio " + list[i].id + " actualizado en DB");
             });
         }
+    }
+
+    public bool RegistrarNuevoPaciente(Paciente paciente)
+    {
+        // Registro a la base de datos
+        // Registro de paciente
+        Dictionary<string, object> pacienteData = new Dictionary<string, object>
+        {
+            { "id", paciente.id },
+            { "nombre", paciente.nombre },
+            { "apellido", paciente.apellido },
+            { "rut", paciente.rut },
+            { "rut_dv", paciente.apellido },
+            { "patologia", paciente.patologia },
+            { "usuarioAsociado", usuarioSalud.credenciales.username },
+            { "credencialUsername", paciente.credenciales.username }
+        };
+
+        DocumentReference pacienteDoc = db.Collection("paciente").Document(paciente.id);
+        pacienteDoc.SetAsync(pacienteData).ContinueWithOnMainThread(task =>
+        {
+            Debug.Log("Paciente guardado en DB");
+        });
+
+        // Registro de credencial
+        Dictionary<string, object> credencialData = new Dictionary<string, object>
+        {
+            { "username", paciente.credenciales.username },
+            { "password", paciente.credenciales.GetPassword() },
+            { "rol", paciente.apellido }
+        };
+
+        DocumentReference credencialDoc = db.Collection("credenciales").Document(paciente.credenciales.username);
+        credencialDoc.SetAsync(credencialData).ContinueWithOnMainThread(task =>
+        {
+            Debug.Log("Paciente guardado en DB");
+            return true;
+        });
+        return false;
+    }
+
+    // Metodo que comprueba si el username esta disponible
+    public bool ValidarUsername(string username)
+    {
+        DocumentReference docRef = db.Collection("credencial").Document(username);
+
+        if (docRef != null)
+            return false;
+        return true;
     }
 
     void OnDisable()

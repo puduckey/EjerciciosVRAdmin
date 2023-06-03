@@ -18,6 +18,6 @@ public class Button_Ejercicio : MonoBehaviour
 
     public void ShowDetails()
     {
-        FindObjectOfType<Menu_SeleccionarEjercicio>().ShowEjercicioDetails(ejercicio);
+        Interfaces.instance.menuSeleccionarEjercicio.ShowEjercicioDetails(ejercicio);
     }
 }

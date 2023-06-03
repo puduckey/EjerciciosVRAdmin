@@ -65,7 +65,7 @@ public class Menu_CrearRutina : MonoBehaviour
         }
 
         // actualiza el listado de configEjercicios asociados a la rutina
-        List<ConfigEjercicio> list = AppData.instance.GetConfigEjercicioListByRutinaID(rutina.id);
+        List<ConfigEjercicio> list = AppData.instance.BuscarConfigEjercicioList(rutina.id);
 
         if (list.Count == 0)
             return;

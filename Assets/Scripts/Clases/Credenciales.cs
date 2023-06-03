@@ -9,12 +9,16 @@ public class Credenciales
     private string password;
     public string rol;
 
+    public Credenciales() { }
+
     public Credenciales(string username, string password, string rol)
     {
         this.username = username;
         this.password = password;
         this.rol = rol;
     }
+
+    public string GetPassword() { return password; }
 
     public bool IniciarSesion(string username, string password)
     {
@@ -30,13 +34,21 @@ public class Credenciales
         return false;
     }
 
-    public void CrearCredenciales()
+    public bool CrearCredenciales(string username, string password, string confirmarPassword, string rol)
     {
+        // validadores
+        if (password != confirmarPassword)
+            return false;
 
-    }
+        // comprobar que el username no exista en la bd
+        bool respuesta = AppData.instance.ValidarUsername(username);
 
-    public void ModificarCredenciales()
-    {
+        if (!respuesta)
+            return false;
 
+        this.username = username;
+        this.password = password;
+        this.rol = rol;
+        return true;
     }
 }
