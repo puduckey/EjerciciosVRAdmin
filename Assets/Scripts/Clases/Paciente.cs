@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
-using System.Text.RegularExpressions;
 
 [System.Serializable]
 public class Paciente
@@ -49,12 +45,17 @@ public class Paciente
 
     public void ModificarPaciente()
     {
-
+        Interfaces.instance.menuRegistrarPaciente.ActivarUI(this);
     }
 
-    public void AsignarRutina()
+    public void AsignacionRutina()
     {
+        Interfaces.instance.menuAsignarRutina.ActivarUI(this);
+    }
 
+    public void AsignarRutina(Rutina rutina)
+    {
+        AppData.instance.RegistrarAsignacionRutinaPaciente(this, rutina);
     }
 
     public void DesplegarHistorial()

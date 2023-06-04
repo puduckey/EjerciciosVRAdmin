@@ -18,6 +18,11 @@ public class Button_GestionRutina : MonoBehaviour
         this.rutina = rutina;
     }
 
+    public void AsignarRutina()
+    {
+        Interfaces.instance.menuAsignarRutina.Asignar(rutina);
+    }
+
     public void EditarDatos()
     {
         rutina.ActualizarRutina();

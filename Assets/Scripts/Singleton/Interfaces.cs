@@ -10,7 +10,12 @@ public class Interfaces : MonoBehaviour
     public Menu_AniadirEjercicio menuAniadirEjercicio;
     public Menu_CrearRutina menuCrearRutina;
     public Menu_GestionRutinas menuGestionRutinas;
-    public Menu_IniciarSesion menu_iniciarSesion;
+
+    public Menu_GestionPacientes menuGestionPacientes;
+    public Menu_RegistrarPaciente menuRegistrarPaciente;
+    public Menu_AsignarRutina menuAsignarRutina;
+
+    public Menu_IniciarSesion menuIniciarSesion;
     public Menu_MenuPrincipal menuPrincipal;
 
     private void Awake()

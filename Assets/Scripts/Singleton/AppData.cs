@@ -6,6 +6,7 @@ using Firebase;
 using Firebase.Firestore;
 using Firebase.Extensions;
 using System.Threading.Tasks;
+using System.Linq;
 
 public class AppData : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class AppData : MonoBehaviour
     public List<Paciente> pacientesUsuario = new List<Paciente>();
     public List<ConfigEjercicio> configEjercicios = new List<ConfigEjercicio>();
     public List<Rutina> rutinas = new List<Rutina>();
+    public List<AsignacionRutina> asignacionRutinas = new List<AsignacionRutina>();
     public List<Ejercicio> ejercicios = new List<Ejercicio>();
 
     public static AppData Instance
@@ -61,7 +63,7 @@ public class AppData : MonoBehaviour
         db = FirebaseFirestore.DefaultInstance;
 
         // Solo para probar, este metodo debe llamarse una vez el usuario se autentifique
-        CapturaDatosBDUsuarioSalud(usuarioSalud);
+        // CapturaDatosBDUsuarioSalud(usuarioSalud);
     }
 
     public void LimpiarInformacion()
@@ -71,6 +73,7 @@ public class AppData : MonoBehaviour
         pacientesUsuario.Clear();
         rutinas.Clear();
         configEjercicios.Clear();
+        asignacionRutinas.Clear();
     }
 
     public async void CapturaDatosBDUsuarioSalud(UsuarioSalud usuario)
@@ -147,20 +150,47 @@ public class AppData : MonoBehaviour
 
             configEjercicios.Add(obj);
         }
-    }
 
-    public Ejercicio BuscarEjercicio(int id)
-    {
-        foreach(Ejercicio ejercicio in ejercicios)
+        // Captura datos de los asignacionRutinas asociadas
+        QuerySnapshot queryAsignacionRutinas = await db.Collection("asignacionRutina").WhereEqualTo("usuarioAsociado", usuario.credenciales.username).GetSnapshotAsync();
+
+        foreach (DocumentSnapshot documentSnapshot in queryAsignacionRutinas.Documents)
         {
-            if (ejercicio.id == id)
-            {
-                return ejercicio;
-            }
-        }
+            Dictionary<string, object> AsignacionRutinaData = documentSnapshot.ToDictionary();
 
-        return null;
+            AsignacionRutina obj = new AsignacionRutina
+            (
+                AsignacionRutinaData["id"].ToString(),
+                BuscarRutina(AsignacionRutinaData["rutinaID"].ToString()),
+                AsignacionRutinaData["fecha"].ToString(),
+                AsignacionRutinaData["hora"].ToString(),
+                Convert.ToInt32(AsignacionRutinaData["estado"]),
+                BuscarPaciente(AsignacionRutinaData["pacienteID"].ToString()),
+                AsignacionRutinaData["usuarioAsociado"].ToString()
+            );
+
+            asignacionRutinas.Add(obj);
+        }
     }
+
+    // public Ejercicio BuscarEjercicio(int id)
+    // {
+    //     foreach(Ejercicio ejercicio in ejercicios)
+    //     {
+    //         if (ejercicio.id == id)
+    //         {
+    //             return ejercicio;
+    //         }
+    //     }
+    // 
+    //     return null;
+    // }
+
+    // Metodos de busqueda de objetos
+    public Ejercicio BuscarEjercicio(int id) => ejercicios.FirstOrDefault(ejercicio => ejercicio.id == id);
+    public Rutina BuscarRutina(string id) => rutinas.FirstOrDefault(rutina => rutina.id == id);
+    public Paciente BuscarPaciente(string id) => pacientesUsuario.FirstOrDefault(paciente => paciente.id == id);
+
 
     public void AgregarConfigEjercicio(ConfigEjercicio config)
     {
@@ -305,10 +335,10 @@ public class AppData : MonoBehaviour
         }
     }
 
-    public bool RegistrarNuevoPaciente(Paciente paciente)
+    public bool RegistrarPaciente(Paciente paciente)
     {
         // Registro a la base de datos
-        // Registro de paciente
+        // Registro o Actualizacion de paciente
         Dictionary<string, object> pacienteData = new Dictionary<string, object>
         {
             { "id", paciente.id },
@@ -327,6 +357,15 @@ public class AppData : MonoBehaviour
             Debug.Log("Paciente guardado en DB");
         });
 
+        // Busca si el paciente ya existe,
+        // si no existe, guarda el nuevo paciente
+        // si existe reemplaza la informacion
+        Paciente pacienteExistente = BuscarPaciente(paciente.id);
+        if (pacienteExistente == null)
+            pacientesUsuario.Add(paciente);
+        else
+            pacienteExistente = paciente;
+
         // Registro de credencial
         Dictionary<string, object> credencialData = new Dictionary<string, object>
         {
@@ -344,6 +383,12 @@ public class AppData : MonoBehaviour
         return false;
     }
 
+    public List<Paciente> ObtenerPacientes()
+    {
+        List<Paciente> pacientesAsociados = pacientesUsuario.FindAll
+        (obj => obj.usuarioAsociado == usuarioSalud.credenciales.username);
+        return pacientesAsociados;
+    }
 
     // Metodo que comprueba si el username esta disponible
     public async Task<bool> ValidarUsername(string username)
@@ -371,6 +416,41 @@ public class AppData : MonoBehaviour
         }
 
         return null; // Retornar null si no se encuentra el documento
+    }
+
+    public void RegistrarAsignacionRutinaPaciente(Paciente paciente, Rutina rutina)
+    {
+        DateTime fechaHoraActual = DateTime.Now;
+        string fecha = fechaHoraActual.ToString("dd/MM/yyyy");
+        string hora = fechaHoraActual.ToString("HH:mm");
+
+        AsignacionRutina asignacion = new AsignacionRutina(
+             Guid.NewGuid().ToString(),
+             rutina,
+             fecha,
+             hora,
+             0,
+             paciente,
+             usuarioSalud.credenciales.username
+            );
+
+        Dictionary<string, object> asignacionData = new Dictionary<string, object>
+        {
+            { "id", asignacion.id },
+            { "rutinaID", asignacion.rutina.id },
+            { "fecha", asignacion.fecha },
+            { "hora", asignacion.hora },
+            { "estado", asignacion.estado },
+            { "pacienteID", asignacion.paciente.id },
+            { "usuarioAsociado", paciente.usuarioAsociado }
+        };
+
+        DocumentReference docRef = db.Collection("asignacionRutina").Document(asignacion.id);
+        docRef.SetAsync(asignacionData).ContinueWithOnMainThread(task =>
+        {
+            Debug.Log("AsignacionRutina guardada en DB");
+            return;
+        });
     }
 
     void OnDisable()

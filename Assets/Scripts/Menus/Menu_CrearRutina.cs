@@ -110,5 +110,4 @@ public class Menu_CrearRutina : MonoBehaviour
             failureText.text = "Porfavor, rellene todos los campos.";
         }
     }
-
 }

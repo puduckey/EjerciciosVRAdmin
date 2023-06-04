@@ -60,4 +60,9 @@ public class Rutina
         return true;
     }
 
+
+    public Rutina SeleccionarRutina()
+    {
+        return this;
+    }
 }

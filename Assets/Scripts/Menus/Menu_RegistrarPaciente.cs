@@ -18,12 +18,15 @@ public class Menu_RegistrarPaciente : MonoBehaviour
 
     [SerializeField] TMP_Text text_mensaje;
 
+    Paciente paciente;
 
     public void ActivarUI(Paciente paciente = null)
     {
         gameObject.SetActive(true);
 
         text_mensaje.text = "";
+
+        this.paciente = paciente;
 
         if (paciente == null)
         {
@@ -69,21 +72,39 @@ public class Menu_RegistrarPaciente : MonoBehaviour
             return;
         }
 
-        Paciente newPaciente = new Paciente();
-        respuesta = newPaciente.CrearPaciente(newCredenciales, Convert.ToInt32(input_rut.text), input_rutDv.text,
-            input_nombre.text, input_apellido.text, input_patologia.text, AppData.instance.usuarioSalud.credenciales.username);
-
-        if (!respuesta)
+        if (paciente == null)
         {
-            text_mensaje.text = "Se ha producido un error, compruebe los datos ingresados";
-            return;
+            Paciente newPaciente = new Paciente();
+            respuesta = newPaciente.CrearPaciente(newCredenciales, Convert.ToInt32(input_rut.text), input_rutDv.text,
+                input_nombre.text, input_apellido.text, input_patologia.text, AppData.instance.usuarioSalud.credenciales.username);
+
+            if (!respuesta)
+            {
+                text_mensaje.text = "Se ha producido un error, compruebe los datos ingresados";
+                return;
+            }
+            AppData.instance.RegistrarPaciente(newPaciente);
         }
-        AppData.instance.RegistrarNuevoPaciente(newPaciente);
+        else
+        {
+            respuesta = paciente.CrearPaciente(newCredenciales, Convert.ToInt32(input_rut.text), input_rutDv.text,
+                input_nombre.text, input_apellido.text, input_patologia.text, AppData.instance.usuarioSalud.credenciales.username);
+
+            if (!respuesta)
+            {
+                text_mensaje.text = "Se ha producido un error, compruebe los datos ingresados";
+                return;
+            }
+            AppData.instance.RegistrarPaciente(paciente);
+        }
+
+        Interfaces.instance.menuGestionPacientes.Mensaje("Registro exitoso");
         Salir();
     }
 
     public void Salir()
     {
         gameObject.SetActive(false);
+        Interfaces.instance.menuGestionPacientes.ActivarUI();
     }
 }

@@ -4,14 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Menu_GestionRutinas : MonoBehaviour
+public class Menu_AsignarRutina : MonoBehaviour
 {
-    public GameObject botonRutinaPrefab;
-    public GridLayoutGroup gridContent;
+    public Paciente pacienteSeleccionado;
 
-    public void ActivarUI()
-    {
+    [SerializeField] GameObject botonRutinaPrefab;
+    [SerializeField] TMP_Text text_title;
+    [SerializeField] GridLayoutGroup gridContent;
+
+    public void ActivarUI(Paciente paciente)
+   {
         gameObject.SetActive(true);
+
+        text_title.text = "Asignar rutina a " + paciente.nombre + " " + paciente.apellido;
+
+        pacienteSeleccionado = paciente;
 
         // limpia instancias de botones
         RectTransform[] objetosUI = gridContent.GetComponentsInChildren<RectTransform>(true);
@@ -24,17 +31,19 @@ public class Menu_GestionRutinas : MonoBehaviour
 
         List<Rutina> rutinas = AppData.instance.ObtenerRutinas();
 
-        foreach(Rutina rutina in rutinas)
+        foreach (Rutina rutina in rutinas)
         {
             var i = Instantiate(botonRutinaPrefab, gridContent.transform);
             i.GetComponent<Button_GestionRutina>().ActualizarDatosBoton(rutina);
         }
     }
 
-    public void CrearNuevaRutina()
+    public void Asignar(Rutina rutina)
     {
-        Rutina newRutina = new Rutina();
-        newRutina.CrearRutina();
+        pacienteSeleccionado.AsignarRutina(rutina);
+        Interfaces.instance.menuGestionPacientes.Mensaje("Rutina " + rutina.nombre + 
+            " asignada exitosamente a paciente " + pacienteSeleccionado.nombre + " " + pacienteSeleccionado.apellido);
+        Salir();
     }
 
     public void Salir()

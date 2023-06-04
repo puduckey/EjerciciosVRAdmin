@@ -4,14 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Menu_GestionRutinas : MonoBehaviour
+public class Menu_GestionPacientes : MonoBehaviour
 {
-    public GameObject botonRutinaPrefab;
+    public GameObject botonPacientePrefab;
     public GridLayoutGroup gridContent;
+    public TMP_Text text_mensaje;
 
     public void ActivarUI()
     {
         gameObject.SetActive(true);
+        text_mensaje.text = "";
 
         // limpia instancias de botones
         RectTransform[] objetosUI = gridContent.GetComponentsInChildren<RectTransform>(true);
@@ -22,19 +24,23 @@ public class Menu_GestionRutinas : MonoBehaviour
                 Destroy(objetoUI.gameObject);
         }
 
-        List<Rutina> rutinas = AppData.instance.ObtenerRutinas();
+        List<Paciente> pacientes = AppData.instance.ObtenerPacientes();
 
-        foreach(Rutina rutina in rutinas)
+        foreach (Paciente paciente in pacientes)
         {
-            var i = Instantiate(botonRutinaPrefab, gridContent.transform);
-            i.GetComponent<Button_GestionRutina>().ActualizarDatosBoton(rutina);
+            var i = Instantiate(botonPacientePrefab, gridContent.transform);
+            i.GetComponent<Button_GestionPaciente>().ActualizarDatosBoton(paciente);
         }
     }
 
-    public void CrearNuevaRutina()
+    public void RegistrarNuevoPaciente()
     {
-        Rutina newRutina = new Rutina();
-        newRutina.CrearRutina();
+        Interfaces.instance.menuRegistrarPaciente.ActivarUI(null);
+    }
+
+    public void Mensaje(string texto)
+    {
+        text_mensaje.text = texto;
     }
 
     public void Salir()
