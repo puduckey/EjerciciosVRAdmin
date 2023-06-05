@@ -390,7 +390,7 @@ public class AppData : MonoBehaviour
         return pacientesAsociados;
     }
 
-    // Metodo que comprueba si el username esta disponible
+    // Metodo que valida si el username esta disponible
     public async Task<bool> ValidarUsername(string username)
     {
         DocumentReference docRef = db.Collection("credencial").Document(username);
@@ -450,6 +450,31 @@ public class AppData : MonoBehaviour
         {
             Debug.Log("AsignacionRutina guardada en DB");
             return;
+        });
+    }
+
+    public List<AsignacionRutina> ObtenerAsignacionRutinas(Paciente paciente)
+    {
+        List<AsignacionRutina> asignaciones = asignacionRutinas.FindAll
+            (obj => obj.paciente == paciente);
+        return asignaciones;
+    }
+
+    public void ActualizarEstadoAsignacion(AsignacionRutina asignacion, int estado)
+    {
+        DocumentReference docRef = db.Collection("asignacionRutina").Document(asignacion.id);
+
+        Dictionary<string, object> actualizacion = new Dictionary<string, object>
+        {
+            { "estado", estado }
+        };
+
+        docRef.UpdateAsync(actualizacion).ContinueWithOnMainThread(task =>
+        {
+            if (task.IsFaulted)
+                Debug.LogError("Error al actualizar el estado: " + task.Exception);
+            else if (task.IsCompleted)
+                Debug.Log("Campo estado actualizado correctamente.");
         });
     }
 

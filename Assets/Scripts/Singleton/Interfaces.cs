@@ -14,6 +14,7 @@ public class Interfaces : MonoBehaviour
     public Menu_GestionPacientes menuGestionPacientes;
     public Menu_RegistrarPaciente menuRegistrarPaciente;
     public Menu_AsignarRutina menuAsignarRutina;
+    public Menu_HistorialRutinas menuHistorialRutinas;
 
     public Menu_IniciarSesion menuIniciarSesion;
     public Menu_MenuPrincipal menuPrincipal;

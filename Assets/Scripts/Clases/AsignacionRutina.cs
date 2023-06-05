@@ -40,6 +40,7 @@ public class AsignacionRutina
     public void ActualizarEstado(int estado)
     {
         this.estado = estado;
+        AppData.instance.ActualizarEstadoAsignacion(this, estado);
     }
 
     public Rutina LeerRutina()

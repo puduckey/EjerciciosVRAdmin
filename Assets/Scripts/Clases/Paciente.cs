@@ -60,7 +60,7 @@ public class Paciente
 
     public void DesplegarHistorial()
     {
-
+        Interfaces.instance.menuHistorialRutinas.ActivarUI(this);
     }
 
     public void ConfirmarAsignacionRutina()
