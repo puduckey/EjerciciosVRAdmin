@@ -40,7 +40,7 @@ public class Rutina
         return i;
     }
 
-    public bool ConfirmarRutina(string nombre, string descripcion)
+    public bool ValidarRutina(string nombre, string descripcion)
     {
         // comprueba que todos los campos esten llenos
         if(string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(descripcion))
@@ -54,7 +54,7 @@ public class Rutina
         this.descripcion = descripcion;
         this.usuarioAsociado = AppData.instance.usuarioSalud.credenciales.username;
 
-        AppData.instance.AgregarRutina(this);
+        AppData.instance.RegistrarRutina(this);
 
         Debug.Log("Rutina creada");
         return true;

@@ -61,9 +61,6 @@ public class AppData : MonoBehaviour
     {
         // Obtiene la instancia de la base de datos de FirebaseFirestore
         db = FirebaseFirestore.DefaultInstance;
-
-        // Solo para probar, este metodo debe llamarse una vez el usuario se autentifique
-        // CapturaDatosBDUsuarioSalud(usuarioSalud);
     }
 
     public void LimpiarInformacion()
@@ -173,26 +170,13 @@ public class AppData : MonoBehaviour
         }
     }
 
-    // public Ejercicio BuscarEjercicio(int id)
-    // {
-    //     foreach(Ejercicio ejercicio in ejercicios)
-    //     {
-    //         if (ejercicio.id == id)
-    //         {
-    //             return ejercicio;
-    //         }
-    //     }
-    // 
-    //     return null;
-    // }
-
     // Metodos de busqueda de objetos
     public Ejercicio BuscarEjercicio(int id) => ejercicios.FirstOrDefault(ejercicio => ejercicio.id == id);
     public Rutina BuscarRutina(string id) => rutinas.FirstOrDefault(rutina => rutina.id == id);
     public Paciente BuscarPaciente(string id) => pacientesUsuario.FirstOrDefault(paciente => paciente.id == id);
 
 
-    public void AgregarConfigEjercicio(ConfigEjercicio config)
+    public void RegistrarConfigEjercicio(ConfigEjercicio config)
     {
         ConfigEjercicio aux = configEjercicios.Find(obj => obj.id == config.id);
 
@@ -253,7 +237,7 @@ public class AppData : MonoBehaviour
         return rutinasAsociadas;
     }
 
-    public void AgregarRutina(Rutina rutina)
+    public void RegistrarRutina(Rutina rutina)
     {
         Rutina aux = rutinas.Find(obj => obj.id == rutina.id);
 

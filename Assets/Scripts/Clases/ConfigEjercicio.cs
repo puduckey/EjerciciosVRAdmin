@@ -58,6 +58,6 @@ public class ConfigEjercicio
 
     public void AgregarEjercicio()
     {
-        AppData.instance.AgregarConfigEjercicio(this);
+        AppData.instance.RegistrarConfigEjercicio(this);
     }
 }

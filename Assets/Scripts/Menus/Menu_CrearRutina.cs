@@ -99,7 +99,7 @@ public class Menu_CrearRutina : MonoBehaviour
 
     public void CrearRutina()
     {
-        bool respuesta = rutina.ConfirmarRutina(input_nombre.text, input_descripcion.text);
+        bool respuesta = rutina.ValidarRutina(input_nombre.text, input_descripcion.text);
         if (respuesta)
         {
             gameObject.SetActive(false);
