@@ -26,24 +26,25 @@ public class AppData : MonoBehaviour
     public List<AsignacionRutina> asignacionRutinas = new List<AsignacionRutina>();
     public List<Ejercicio> ejercicios = new List<Ejercicio>();
 
-    public static AppData Instance
-    {
-        get
-        {
-            // Si no hay una instancia existente, crea una nueva
-            if (instance == null)
-            {
-                GameObject singletonObject = new GameObject();
-                instance = singletonObject.AddComponent<AppData>();
-                singletonObject.name = typeof(AppData).ToString() + " (Singleton)";
-
-                // Asegura que el objeto no se destruya al cargar nuevas escenas
-                DontDestroyOnLoad(singletonObject);
-            }
-
-            return instance;
-        }
-    }
+    public List<ConfigEjercicio> listaEjerciciosRealizar;
+    //public static AppData Instance
+    //{
+    //    get
+    //    {
+    //        // Si no hay una instancia existente, crea una nueva
+    //        if (instance == null)
+    //        {
+    //            GameObject singletonObject = new GameObject();
+    //            instance = singletonObject.AddComponent<AppData>();
+    //            singletonObject.name = typeof(AppData).ToString() + " (Singleton)";
+    //
+    //            // Asegura que el objeto no se destruya al cargar nuevas escenas
+    //            DontDestroyOnLoad(singletonObject);
+    //        }
+    //
+    //        return instance;
+    //    }
+    //}
 
     private void Awake()
     {
@@ -54,6 +55,7 @@ public class AppData : MonoBehaviour
         else
         {
             instance = this;
+            DontDestroyOnLoad(this);
         }
     }
 
@@ -169,6 +171,79 @@ public class AppData : MonoBehaviour
             asignacionRutinas.Add(obj);
         }
     }
+
+    public async void CapturaDatosBDPaciente(Paciente usuario)
+    {
+        // LimpiarDatos
+        LimpiarInformacion();
+
+        // AsignarUsuario
+        paciente = usuario;
+
+        // Captura datos de rutinas asociadas 
+        QuerySnapshot queryrutina = await db.Collection("rutina").WhereEqualTo("usuarioAsociado", paciente.usuarioAsociado).GetSnapshotAsync();
+
+        foreach (DocumentSnapshot documentSnapshot in queryrutina.Documents)
+        {
+            Dictionary<string, object> rutinaData = documentSnapshot.ToDictionary();
+
+            Rutina obj = new Rutina
+            (
+                rutinaData["id"].ToString(),
+                rutinaData["nombre"].ToString(),
+                rutinaData["descripcion"].ToString(),
+                rutinaData["usuarioAsociado"].ToString()
+            );
+
+            rutinas.Add(obj);
+        }
+
+        // Captura datos de los configEjercicio asociadas
+        QuerySnapshot queryConfigEjercicio = await db.Collection("configEjercicio").WhereEqualTo("usuarioAsociado", paciente.usuarioAsociado).GetSnapshotAsync();
+
+        foreach (DocumentSnapshot documentSnapshot in queryConfigEjercicio.Documents)
+        {
+            Dictionary<string, object> configEjercicioData = documentSnapshot.ToDictionary();
+
+            ConfigEjercicio obj = new ConfigEjercicio
+            (
+                configEjercicioData["id"].ToString(),
+                BuscarEjercicio(Convert.ToInt32(configEjercicioData["ejercicioID"])),
+                Convert.ToInt32(configEjercicioData["repeticiones"]),
+                Convert.ToInt32(configEjercicioData["duracion"]),
+                Convert.ToInt32(configEjercicioData["series"]),
+                Convert.ToInt32(configEjercicioData["descansoSeries"]),
+                Convert.ToInt32(configEjercicioData["descanso"]),
+                configEjercicioData["rutinaAsociadaID"].ToString(),
+                configEjercicioData["usuarioAsociado"].ToString(),
+                Convert.ToInt32(configEjercicioData["posicion"])
+            );
+
+            configEjercicios.Add(obj);
+        }
+
+        // Captura datos de los asignacionRutinas asociadas
+        QuerySnapshot queryAsignacionRutinas = await db.Collection("asignacionRutina").WhereEqualTo("pacienteID", paciente.id).GetSnapshotAsync();
+
+        foreach (DocumentSnapshot documentSnapshot in queryAsignacionRutinas.Documents)
+        {
+            Dictionary<string, object> AsignacionRutinaData = documentSnapshot.ToDictionary();
+
+            AsignacionRutina obj = new AsignacionRutina
+            (
+                AsignacionRutinaData["id"].ToString(),
+                BuscarRutina(AsignacionRutinaData["rutinaID"].ToString()),
+                AsignacionRutinaData["fecha"].ToString(),
+                AsignacionRutinaData["hora"].ToString(),
+                Convert.ToInt32(AsignacionRutinaData["estado"]),
+                paciente,
+                AsignacionRutinaData["usuarioAsociado"].ToString()
+            );
+
+            asignacionRutinas.Add(obj);
+        }
+    }
+
 
     // Metodos de busqueda de objetos
     public Ejercicio BuscarEjercicio(int id) => ejercicios.FirstOrDefault(ejercicio => ejercicio.id == id);
@@ -417,6 +492,8 @@ public class AppData : MonoBehaviour
              paciente,
              usuarioSalud.credenciales.username
             );
+
+        asignacionRutinas.Add(asignacion);
 
         Dictionary<string, object> asignacionData = new Dictionary<string, object>
         {

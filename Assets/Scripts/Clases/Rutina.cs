@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 
 [System.Serializable]
@@ -31,6 +32,13 @@ public class Rutina
     public void ActualizarRutina()
     {
         Interfaces.instance.menuCrearRutina.ActivarUIActualizar(this);
+    }
+
+    public void EjecutarRutina()
+    {
+        List<ConfigEjercicio> configEjercicios = AppData.instance.BuscarConfigEjercicioList(this.id);
+        AppData.instance.listaEjerciciosRealizar = configEjercicios;
+        SceneManager.LoadScene("RutinaVR");
     }
 
     public ConfigEjercicio AgregarEjercicio()

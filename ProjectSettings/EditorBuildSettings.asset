@@ -8,4 +8,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  m_configObjects: {}
+  - enabled: 1
+    path: Assets/Scenes/MenuPaciente.unity
+    guid: 5ba7e5c19a1d0ae428472893710b6e40
+  - enabled: 1
+    path: Assets/Scenes/RutinaVR.unity
+    guid: d2fcc3ae0fe482646af7cd4a23f402f7
+  m_configObjects:
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: d9922fd5e32c28544985afa0edc3c91b, type: 2}

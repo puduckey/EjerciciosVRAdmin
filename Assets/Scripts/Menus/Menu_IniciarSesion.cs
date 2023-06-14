@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Firebase.Firestore;
 using Firebase.Extensions;
+using System;
 
 public class Menu_IniciarSesion : MonoBehaviour
 {
@@ -61,6 +62,8 @@ public class Menu_IniciarSesion : MonoBehaviour
                     UsuarioSalud usuarioSalud = new UsuarioSalud(credenciales);
                     AppData.instance.usuarioSalud = usuarioSalud;
 
+                    AppData.instance.CapturaDatosBDUsuarioSalud(usuarioSalud);
+
                     Interfaces.instance.menuPrincipal.ActivarUI();
 
                     Debug.Log("Usuario Salud identificado");
@@ -68,11 +71,32 @@ public class Menu_IniciarSesion : MonoBehaviour
                 else if (credenciales.rol == "paciente")
                 {
                     // Obtener la data del paciente
-                    //
-                    // Paciente paciente = new Paciente(...)
-                    //
-                    // 
+                    Dictionary<string, object> pacienteData = new Dictionary<string, object>();
+
+                    Query pacienteQuery = db.Collection("paciente").WhereEqualTo("credencialUsername", credenciales.username);
+                    QuerySnapshot pacienteSnapshot = await pacienteQuery.GetSnapshotAsync();
+
+                    foreach(DocumentSnapshot doc in pacienteSnapshot.Documents)
+                    {
+                        pacienteData = doc.ToDictionary();
+                    }
+
+                    Paciente paciente = new Paciente
+                        (
+                            pacienteData["id"].ToString(),
+                            credenciales,
+                            Convert.ToInt32(pacienteData["rut"]),
+                            pacienteData["rut_dv"].ToString(),
+                            pacienteData["nombre"].ToString(),
+                            pacienteData["apellido"].ToString(),
+                            pacienteData["patologia"].ToString(),
+                            pacienteData["usuarioAsociado"].ToString()
+                        );
+
                     Debug.Log("Usuario Paciente identificado");
+
+                    AppData.instance.CapturaDatosBDPaciente(paciente);
+                    Interfaces.instance.CargarMenuPaciente();
                 }
 
                 this.gameObject.SetActive(false);

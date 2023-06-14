@@ -8,6 +8,7 @@ public class Ejercicio : ScriptableObject
     public int id;
     public string nombre, descripcion, tipo, nivel;
     public Sprite imagen;
-    public Animator animacion;
+    public RuntimeAnimatorController animacion;
+    public AnimationClip animClip;
     public string equipo, recomendaciones;
 }
