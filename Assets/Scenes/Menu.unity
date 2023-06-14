@@ -4686,8 +4686,8 @@ MonoBehaviour:
     usuarioAsociado: holahola
   asignacionRutinas: []
   ejercicios:
-  - {fileID: 11400000, guid: b013013e09dad9d44aa58701591a9c9d, type: 2}
-  - {fileID: 11400000, guid: beaf1297e54140641958c077e4df4cd3, type: 2}
+  - {fileID: 11400000, guid: 5c8fc588954c8fb4789dd3fb3d5638e7, type: 2}
+  - {fileID: 11400000, guid: 5c7c9f3b4347902428abdd64d64cdfb5, type: 2}
   listaEjerciciosRealizar: []
 --- !u!4 &286913696
 Transform:
