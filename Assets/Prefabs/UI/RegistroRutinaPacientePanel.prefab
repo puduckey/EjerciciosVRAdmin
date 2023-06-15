@@ -445,7 +445,7 @@ MonoBehaviour:
   text_desc: {fileID: 1151101509074521604}
   text_fecha: {fileID: 1151101509710961596}
   text_estado: {fileID: 1151101508966391940}
-  btn_cancelar: {fileID: 1151101509946065276}
+  btn_cancelar: {fileID: 6499459042513779018}
 --- !u!1 &1151101509710961598
 GameObject:
   m_ObjectHideFlags: 0
