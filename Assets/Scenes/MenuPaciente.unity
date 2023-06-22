@@ -2354,6 +2354,7 @@ GameObject:
   - component: {fileID: 985369507}
   - component: {fileID: 985369509}
   - component: {fileID: 985369510}
+  - component: {fileID: 985369511}
   m_Layer: 0
   m_Name: Extra
   m_TagString: Untagged
@@ -2424,6 +2425,21 @@ MonoBehaviour:
   menuDetallesRutina: {fileID: 2056943921}
   menuIniciarSesion: {fileID: 0}
   menuPrincipal: {fileID: 1464326802}
+--- !u!114 &985369511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985369506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09ad72bb1f9f98b4686f305b06ed8760, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: configData.json
+  folderName: Data
+  packageName: com.aCompany.EjerciciosVR
 --- !u!1 &990965021
 GameObject:
   m_ObjectHideFlags: 0

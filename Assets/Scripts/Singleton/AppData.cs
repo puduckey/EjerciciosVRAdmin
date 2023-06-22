@@ -27,24 +27,6 @@ public class AppData : MonoBehaviour
     public List<Ejercicio> ejercicios = new List<Ejercicio>();
 
     public List<ConfigEjercicio> listaEjerciciosRealizar;
-    //public static AppData Instance
-    //{
-    //    get
-    //    {
-    //        // Si no hay una instancia existente, crea una nueva
-    //        if (instance == null)
-    //        {
-    //            GameObject singletonObject = new GameObject();
-    //            instance = singletonObject.AddComponent<AppData>();
-    //            singletonObject.name = typeof(AppData).ToString() + " (Singleton)";
-    //
-    //            // Asegura que el objeto no se destruya al cargar nuevas escenas
-    //            DontDestroyOnLoad(singletonObject);
-    //        }
-    //
-    //        return instance;
-    //    }
-    //}
 
     private void Awake()
     {
@@ -537,6 +519,23 @@ public class AppData : MonoBehaviour
             else if (task.IsCompleted)
                 Debug.Log("Campo estado actualizado correctamente.");
         });
+    }
+
+    public void GenerarJson()
+    {
+        if (listaEjerciciosRealizar != null)
+        {
+            List<ConfigEjercicioEjec> configEjercicioEjecs = new List<ConfigEjercicioEjec>();
+
+            foreach(ConfigEjercicio config in listaEjerciciosRealizar)
+            {
+                ConfigEjercicioEjec newConfigEjer = new ConfigEjercicioEjec(config.id, config.ejercicio.id, config.repeticiones, config.duracion,
+                    config.series, config.descansoSeries, config.descanso, config.rutinaAsociadaID, config.usuarioAsociado);
+                configEjercicioEjecs.Add(newConfigEjer);
+            }
+
+            FindObjectOfType<JsonFileManager>().SaveListToJson(configEjercicioEjecs);
+        }
     }
 
     void OnDisable()

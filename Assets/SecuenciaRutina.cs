@@ -26,8 +26,7 @@ public class SecuenciaRutina : MonoBehaviour
     {
         // StartCoroutine(XRManager.instance.InitXR());
 
-        // test
-        ObtenerEjercicios(test);
+        ObtenerEjercicios(AppData.instance.listaEjerciciosRealizar);
         ComenzarRutina();
     }
 
