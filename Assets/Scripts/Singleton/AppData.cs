@@ -533,8 +533,10 @@ public class AppData : MonoBehaviour
                     config.series, config.descansoSeries, config.descanso, config.rutinaAsociadaID, config.usuarioAsociado);
                 configEjercicioEjecs.Add(newConfigEjer);
             }
+            ConfigEjercicioList list = new ConfigEjercicioList();
+            list.list = configEjercicioEjecs;
 
-            FindObjectOfType<JsonFileManager>().SaveListToJson(configEjercicioEjecs);
+            FindObjectOfType<JsonFileManager>().SaveListToJson(list);
         }
     }
 

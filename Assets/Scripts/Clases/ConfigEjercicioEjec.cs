@@ -1,3 +1,6 @@
+using System;
+
+[Serializable]
 public class ConfigEjercicioEjec
 {
     public string id;

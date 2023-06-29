@@ -28,6 +28,9 @@ public class SecuenciaRutina : MonoBehaviour
 
         ObtenerEjercicios(AppData.instance.listaEjerciciosRealizar);
         ComenzarRutina();
+#if !UNITY_EDITOR
+        GetComponent<LaunchVR>().TryLaunch();
+#endif
     }
 
     public void ObtenerEjercicios(List<ConfigEjercicio> configEjercicios)
@@ -77,10 +80,9 @@ public class SecuenciaRutina : MonoBehaviour
             }
             StartCoroutine(Temporizador("Descanso: ", configEjercicio.descanso));
             yield return new WaitForSeconds(configEjercicio.descanso);
-
-            // XRManager.instance.StopXR();
-            SceneManager.LoadScene("MenuPaciente");
         }
+        // XRManager.instance.StopXR();
+        SceneManager.LoadScene("MenuPaciente");
     }
 
     IEnumerator Temporizador(string texto, int segundos)

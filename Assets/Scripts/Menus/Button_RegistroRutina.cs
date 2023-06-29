@@ -52,6 +52,7 @@ public class Button_RegistroRutina : MonoBehaviour
     public void RealizarRutina()
     {
         Interfaces.instance.menuHistorialRutinas.RealizarRutina(asignacionRutina.LeerRutina());
+        asignacionRutina.ActualizarEstado(1);
     }
 
     public void CancelarAsignacion()

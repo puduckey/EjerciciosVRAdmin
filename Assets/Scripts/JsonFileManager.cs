@@ -12,10 +12,11 @@ public class JsonFileManager : MonoBehaviour
     [SerializeField]
     private string packageName = "com.aCompany.EjerciciosVR";
 
-    public void SaveListToJson(List<ConfigEjercicioEjec> objectList)
+    public void SaveListToJson(ConfigEjercicioList objectList)
     {
         string jsonData = JsonUtility.ToJson(objectList);
-
+        Debug.Log(objectList);
+#if !UNITY_EDITOR
         string folderPath = Path.Combine(Application.persistentDataPath, folderName);
         string filePath = Path.Combine(folderPath, fileName);
 
@@ -29,9 +30,10 @@ public class JsonFileManager : MonoBehaviour
         File.WriteAllText(filePath, jsonData);
 
         Debug.Log("Archivo JSON guardado en: " + filePath);
+#endif
     }
 
-    public List<ConfigEjercicioEjec> LoadListFromJson() 
+    public ConfigEjercicioList LoadListFromJson() 
     {
         string path = "/storage/emulated/0/Android/data/com.aCompany.EjerciciosVR/files/Data/configData.json";
 
@@ -39,7 +41,7 @@ public class JsonFileManager : MonoBehaviour
         {
             // Leemos el contenido del archivo
             string jsonData = File.ReadAllText(path);
-            return JsonUtility.FromJson<List<ConfigEjercicioEjec>>(jsonData);
+            return JsonUtility.FromJson<ConfigEjercicioList>(jsonData);
         }
         else
         {

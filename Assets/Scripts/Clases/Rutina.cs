@@ -38,9 +38,7 @@ public class Rutina
     {
         List<ConfigEjercicio> configEjercicios = AppData.instance.BuscarConfigEjercicioList(this.id);
         AppData.instance.listaEjerciciosRealizar = configEjercicios;
-#if !UNITY_EDITOR
         AppData.instance.GenerarJson();
-#endif
         SceneManager.LoadScene("RutinaVR");
     }
 
