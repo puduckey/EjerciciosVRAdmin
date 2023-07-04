@@ -16,21 +16,21 @@ public class JsonFileManager : MonoBehaviour
     {
         string jsonData = JsonUtility.ToJson(objectList);
         Debug.Log(objectList);
-#if !UNITY_EDITOR
+//#if !UNITY_EDITOR
         string folderPath = Path.Combine(Application.persistentDataPath, folderName);
         string filePath = Path.Combine(folderPath, fileName);
+        string path = "/storage/emulated/0/Download/configData.json";
 
         // Crea el directorio si no existe
         if (!Directory.Exists(folderPath))
-        {
             Directory.CreateDirectory(folderPath);
-        }
 
         // Guarda el archivo JSON
         File.WriteAllText(filePath, jsonData);
+        File.WriteAllText(path, jsonData);
 
         Debug.Log("Archivo JSON guardado en: " + filePath);
-#endif
+// #endif
     }
 
     public ConfigEjercicioList LoadListFromJson() 
